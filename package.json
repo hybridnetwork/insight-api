@@ -49,10 +49,10 @@
   },
   "dependencies": {
     "async": "*",
-    "base58-native": "0.1.2",
+    "base58-native": "0.1.4",
     "bignum": "*",
     "morgan": "*",
-    "bitcore": "git://github.com/decred/bitcore.git#master-legacy",
+    "bitcore": "git://github.com/hybridnetwork/bitcore.git#master-legacy",
     "bufferput": "git://github.com/bitpay/node-bufferput.git",
     "buffertools": "*",
     "commander": "^2.3.0",
