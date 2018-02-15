@@ -72,6 +72,22 @@ case 'dcrdtestnet':
     b_port = '19109';
     p2p_port = '19108';
     break;
+case 'hxlivenet':
+    env = 'hxlivenet';
+    var network = 'hxlivenet';
+    db = home + '/hxd';
+    port = '3005';
+    b_port = '1409';
+    p2p_port = '1408';
+    break;
+case 'hxtestnet':
+    env = 'hxtestnet';
+    var network = 'hxtestnet';
+    db = home + '/hxtestnet';
+    port = '3006';
+    b_port = '12009';
+    p2p_port = '12008';
+    break;
 }
 port = parseInt(process.env.INSIGHT_PORT) || port;
 
