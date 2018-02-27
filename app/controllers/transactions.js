@@ -156,6 +156,7 @@ exports.list = function(req, res, next) {
         if (err) {
           console.log(err);
           res.status(404).send('TX not found');
+          return;
         }
 	var nonNullTxs = [];
 	for (var i = 0; i < results.length; i++) {
@@ -195,6 +196,7 @@ exports.list = function(req, res, next) {
         if (err) {
           console.log(err);
           res.status(404).send('TX not found');
+          return;
         }
 	var nonNullTxs = [];
 	for (var i = 0; i < results.length; i++) {
