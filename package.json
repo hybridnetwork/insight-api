@@ -4,25 +4,32 @@
   "description": "An open-source bitcoin blockchain API. The Insight API provides you with a convenient, powerful and simple way to query and broadcast data on the bitcoin network and build your own services with it.",
   "version": "0.2.18D",
   "repository": "https://github.com/decred/insight-api",
-  "contributors": [{
-    "name": "Matias Alejo Garcia",
-    "email": "ematiu@gmail.com"
-  }, {
-    "name": "Manuel Araoz",
-    "email": "manuelaraoz@gmail.com"
-  }, {
-    "name": "Mario Colque",
-    "email": "colquemario@gmail.com"
-  }, {
-    "name": "Gustavo Cortez",
-    "email": "cmgustavo83@gmail.com"
-  }, {
-    "name": "Juan Ignacio Sosa Lopez",
-    "email": "bechilandia@gmail.com"
-  }, {
-    "name": "Ivan Socolsky",
-    "email": "jungans@gmail.com"
-  }],
+  "contributors": [
+    {
+      "name": "Matias Alejo Garcia",
+      "email": "ematiu@gmail.com"
+    },
+    {
+      "name": "Manuel Araoz",
+      "email": "manuelaraoz@gmail.com"
+    },
+    {
+      "name": "Mario Colque",
+      "email": "colquemario@gmail.com"
+    },
+    {
+      "name": "Gustavo Cortez",
+      "email": "cmgustavo83@gmail.com"
+    },
+    {
+      "name": "Juan Ignacio Sosa Lopez",
+      "email": "bechilandia@gmail.com"
+    },
+    {
+      "name": "Ivan Socolsky",
+      "email": "jungans@gmail.com"
+    }
+  ],
   "bugs": {
     "url": "https://github.com/decred/insight-api/issues"
   },
@@ -51,7 +58,6 @@
     "async": "*",
     "base58-native": "0.1.4",
     "bignum": "*",
-    "morgan": "*",
     "bitcore": "git://github.com/hybridnetwork/bitcore.git#master-legacy",
     "bufferput": "git://github.com/bitpay/node-bufferput.git",
     "buffertools": "*",
@@ -66,11 +72,13 @@
     "microtime": "^0.6.0",
     "mkdirp": "^0.5.0",
     "moment": "~2.5.0",
+    "morgan": "*",
     "preconditions": "^1.0.7",
     "request": "^2.48.0",
     "socket.io": "1.0.6",
     "socket.io-client": "1.0.6",
     "soop": "=0.1.5",
+    "sqlite3": "^3.1.13",
     "winston": "*",
     "xmlhttprequest": "~1.6.0"
   },

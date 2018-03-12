@@ -27,6 +27,10 @@ module.exports = function(app) {
   app.get(apiPrefix + '/txs', transactions.list);
   app.post(apiPrefix + '/tx/send', transactions.send);
 
+  //PQ Stats routes
+  var pqStats = require('../app/controllers/pqstats');
+  app.get(apiPrefix + '/pqstats', pqStats.getPqStats);
+
   // Raw Routes
   app.get(apiPrefix + '/rawtx/:txid', transactions.showRaw);
   app.param('txid', transactions.rawTransaction);
