@@ -19,7 +19,7 @@ exports.show = function(req, res) {
     if (err || ! statusObject)
       return common.handleErrors(err, res);
     else {
-      res.jsonp(statusObject);
+      res.json(statusObject);
     }
   };
 
@@ -38,6 +38,12 @@ exports.show = function(req, res) {
       break;
     case 'getBestBlockHash':
       statusObject.getBestBlockHash(returnJsonp);
+      break;
+    case 'getMiningInfo':
+      statusObject.getMiningInfo(returnJsonp);
+      break;
+    case 'getTicketInfo':
+      statusObject.getTicketInfo(returnJsonp);
       break;
     case 'getInfo':
     default:

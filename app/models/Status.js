@@ -1,20 +1,20 @@
 'use strict';
 //var imports       = require('soop').imports();
 
-var async     = require('async');
-var bitcore   = require('bitcore');
+var async = require('async');
+var bitcore = require('bitcore');
 var RpcClient = bitcore.RpcClient;
-var config    = require('../../config/config');
-var rpc       = new RpcClient(config.bitcoind);
-var bDb       = require('../../lib/BlockDb').default();
+var config = require('../../config/config');
+var rpc = new RpcClient(config.bitcoind);
+var bDb = require('../../lib/BlockDb').default();
 
 function Status() {}
 
-Status.prototype.getInfo = function(next) {
+Status.prototype.getInfo = function (next) {
   var that = this;
   async.series([
     function (cb) {
-      rpc.getInfo(function(err, info){
+      rpc.getInfo(function (err, info) {
         if (err) return cb(err);
 
         that.info = info.result;
@@ -26,11 +26,65 @@ Status.prototype.getInfo = function(next) {
   });
 };
 
-Status.prototype.getCoinSupply = function(next) {
+Status.prototype.getTicketInfo = function (next) {
+  var that = this;
+  async.parallel([
+    function (cb) {
+      rpc.getStakeInfo(function (err, stakeInfo) {
+        if (err) {
+          cb(err);
+          return;
+        }
+        cb(null, stakeInfo.result);
+      })
+    },
+    function (cb) {
+      rpc.getTicketPoolValue(function (err, ticketPoolValue) {
+        if (err) {
+          cb(err);
+          return;
+        }
+        cb(null, ticketPoolValue.result);
+      });
+    }
+  ], function (err, results) {
+    if (err) {
+      return next(err);
+    }
+    var stakeInfo = results[0];
+    var totalTicketValue = results[1];
+    that.ticketInfo = {
+      allMempoolTix: stakeInfo.allmempooltix,
+      poolSize: stakeInfo.poolsize,
+      difficulty: stakeInfo.difficulty,
+      totalTicketValue: totalTicketValue
+    };
+    next();
+  });
+}
+
+Status.prototype.getMiningInfo = function (next) {
   var that = this;
   async.series([
     function (cb) {
-      rpc.getCoinSupply(function(err, cs){
+      rpc.getMiningInfo(function (err, miningInfo) {
+        if (err) {
+          return cb(err);
+        }
+        that.miningInfo = miningInfo.result;
+        return cb();
+      })
+    }
+  ], function (err) {
+    return next(err);
+  });
+}
+
+Status.prototype.getCoinSupply = function (next) {
+  var that = this;
+  async.series([
+    function (cb) {
+      rpc.getCoinSupply(function (err, cs) {
         if (err) return cb(err);
 
         that.coinsupply = cs.result;
@@ -42,11 +96,11 @@ Status.prototype.getCoinSupply = function(next) {
   });
 };
 
-Status.prototype.getDifficulty = function(next) {
+Status.prototype.getDifficulty = function (next) {
   var that = this;
   async.series([
     function (cb) {
-      rpc.getDifficulty(function(err, df){
+      rpc.getDifficulty(function (err, df) {
         if (err) return cb(err);
 
         that.difficulty = df.result;
@@ -58,11 +112,11 @@ Status.prototype.getDifficulty = function(next) {
   });
 };
 
-Status.prototype.getTxOutSetInfo = function(next) {
+Status.prototype.getTxOutSetInfo = function (next) {
   var that = this;
   async.series([
     function (cb) {
-      rpc.getTxOutSetInfo(function(err, txout){
+      rpc.getTxOutSetInfo(function (err, txout) {
         if (err) return cb(err);
 
         that.txoutsetinfo = txout.result;
@@ -74,11 +128,11 @@ Status.prototype.getTxOutSetInfo = function(next) {
   });
 };
 
-Status.prototype.getBestBlockHash = function(next) {
+Status.prototype.getBestBlockHash = function (next) {
   var that = this;
   async.series([
     function (cb) {
-      rpc.getBestBlockHash(function(err, bbh){
+      rpc.getBestBlockHash(function (err, bbh) {
         if (err) return cb(err);
 
         that.bestblockhash = bbh.result;
@@ -91,29 +145,29 @@ Status.prototype.getBestBlockHash = function(next) {
   });
 };
 
-Status.prototype.getLastBlockHash = function(next) {
+Status.prototype.getLastBlockHash = function (next) {
   var that = this;
-  bDb.getTip(function(err,tip) {
+  bDb.getTip(function (err, tip) {
     that.syncTipHash = tip;
     async.waterfall(
       [
-        function(callback){
-          rpc.getBlockCount(function(err, bc){
+        function (callback) {
+          rpc.getBlockCount(function (err, bc) {
             if (err) return callback(err);
             callback(null, bc.result);
           });
         },
-        function(bc, callback){
-          rpc.getBlockHash(bc, function(err, bh){
+        function (bc, callback) {
+          rpc.getBlockHash(bc, function (err, bh) {
             if (err) return callback(err);
             callback(null, bh.result);
           });
         }
       ],
-        function (err, result) {
-          that.lastblockhash = result;
-          return next();
-        }
+      function (err, result) {
+        that.lastblockhash = result;
+        return next();
+      }
     );
   });
 };
