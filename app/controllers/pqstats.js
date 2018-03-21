@@ -17,7 +17,6 @@ module.exports.getPqStats = function (req, res, next) {
     return;
   };
   StatsDb.getPqStats(function (error, stats) {
-    console.log("STATS", stats);
     if (error) {
       console.log("err", error);
       return common.handleErrors(error, res);
