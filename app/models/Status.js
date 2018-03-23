@@ -7,6 +7,7 @@ var RpcClient = bitcore.RpcClient;
 var config = require('../../config/config');
 var rpc = new RpcClient(config.bitcoind);
 var bDb = require('../../lib/BlockDb').default();
+var StatsDb = require('../../lib/StatsDb');
 
 function Status() {}
 
@@ -171,5 +172,13 @@ Status.prototype.getLastBlockHash = function (next) {
     );
   });
 };
+
+Status.prototype.getHashPerSeconds = function (next) {
+  var self = this;
+  StatsDb.getHashPerSecondsOverTime(function (err, results) {
+    self.networkHashps = results;
+    next(err);
+  });
+}
 
 module.exports = require('soop')(Status);

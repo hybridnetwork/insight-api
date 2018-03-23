@@ -139,6 +139,7 @@ var enableEmailstore = process.env.ENABLE_EMAILSTORE === 'true';
 var loggerLevel = process.env.LOGGER_LEVEL || 'info';
 var enableHTTPS = process.env.ENABLE_HTTPS === 'true';
 var enableCurrencyRates = process.env.ENABLE_CURRENCYRATES === 'true';
+var hpsInterval = process.env.STATS_HPS_INTERVAL || 10;
 
 if (!fs.existsSync(db)) {
   mkdirp.sync(db);
@@ -173,4 +174,5 @@ module.exports = {
   safeConfirmations: safeConfirmations, // PLEASE NOTE THAT *FULL RESYNC* IS NEEDED TO CHANGE safeConfirmations
   ignoreCache: ignoreCache,
   forceRPCsync: forceRPCsync,
+  hpsInterval: hpsInterval
 };

@@ -45,6 +45,9 @@ exports.show = function(req, res) {
     case 'getTicketInfo':
       statusObject.getTicketInfo(returnJsonp);
       break;
+    case 'gethps':
+      statusObject.getHashPerSeconds(returnJsonp);
+      break;
     case 'getInfo':
     default:
       statusObject.getInfo(returnJsonp);
