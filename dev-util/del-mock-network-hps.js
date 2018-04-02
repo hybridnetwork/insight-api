@@ -1,5 +1,5 @@
 var sqlite3 = require('sqlite3');
-var config = require('./config/config');
+var config = require('../config/config');
 var path = require('path');
 var async = require('async');
 
